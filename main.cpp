@@ -6,15 +6,13 @@
 
 using namespace std;
 
-const int NUM_ENTITIES = 8;
+const int NUM_ENTITIES = 11;
 
 int main() {
   SearchTree searchTree;
-  int nums[NUM_ENTITIES] = {20, 18, 58, 7, 19, 26, 25, 30};
+  int nums[NUM_ENTITIES] = {20, 11, 7, 8, 9, 17, 32, 67, 89, 24, 128};
   string names[NUM_ENTITIES] = {
-    "Linus", "Stallman", "Bjarne",
-    "Notch", "Daniel", "Fabry",
-    "Gottfrid", "Dexter"};
+    "20", "11", "7", "8", "9", "17", "32", "67", "89", "24", "128"};
   Entity entities[NUM_ENTITIES];
 
   for (int i = 0; i < NUM_ENTITIES; i++) {
@@ -37,7 +35,10 @@ int main() {
   searchTree.printPostOrder();
   cout << endl;
 
+  searchTree.deleteEntity(entities[3].getNum());
   searchTree.deleteEntity(entities[0].getNum());
+  searchTree.deleteEntity(entities[7].getNum());
+  searchTree.deleteEntity(entities[5].getNum());
   
   cout << "==============" << endl;
 
