@@ -1,5 +1,9 @@
+#include <bits/stdc++.h>
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 #include "binary_tree.h"
 #include "entity.h"
@@ -9,50 +13,64 @@ using namespace std;
 const int NUM_ENTITIES = 11;
 
 int main() {
-  SearchTree searchTree;
-  int nums[NUM_ENTITIES] = {20, 11, 7, 8, 9, 17, 32, 67, 89, 24, 128};
-  string names[NUM_ENTITIES] = {
-    "20", "11", "7", "8", "9", "17", "32", "67", "89", "24", "128"};
-  Entity entities[NUM_ENTITIES];
+    std::ifstream f("input.json");
+    json data = json::parse(f);
+    std::vector<int> input_numbers = data["numbers"].get<std::vector<int>>();
 
-  for (int i = 0; i < NUM_ENTITIES; i++) {
-    Entity entity = Entity(nums[i], names[i]);
-    entities[i] = entity;
-    searchTree.insertEntity(entity);
-  }
-  
-  cout << "==============" << endl;
-  
-  cout << "Pre: ";
-  searchTree.printPreOrder();
-  cout << endl;
+    std::vector<std::string> input_numbers_str;
 
-  cout << "In: ";
-  searchTree.printInOrder();
-  cout << endl;
+    transform(input_numbers.begin(), input_numbers.end(), back_inserter(input_numbers_str),
+              [](int i) { return std::to_string(i); });
 
-  cout << "Post: ";
-  searchTree.printPostOrder();
-  cout << endl;
+    SearchTree searchTree;
+    int nums[NUM_ENTITIES];
+    string names[NUM_ENTITIES];
 
-  searchTree.deleteEntity(entities[3].getNum());
-  searchTree.deleteEntity(entities[0].getNum());
-  searchTree.deleteEntity(entities[7].getNum());
-  searchTree.deleteEntity(entities[5].getNum());
-  
-  cout << "==============" << endl;
+    for(size_t i = 0; i < input_numbers.size(); ++i) {
+        nums[i] = input_numbers[i];
+        names[i] = input_numbers_str[i];
+    }
 
-  cout << "Pre: ";
-  searchTree.printPreOrder();
-  cout << endl;
+    Entity entities[NUM_ENTITIES];
 
-  cout << "In: ";
-  searchTree.printInOrder();
-  cout << endl;
+    for (int i = 0; i < NUM_ENTITIES; i++) {
+        Entity entity = Entity(nums[i], names[i]);
+        entities[i] = entity;
+        searchTree.insertEntity(entity);
+    }
 
-  cout << "Post: ";
-  searchTree.printPostOrder();
-  cout << endl;  
-  
-  return 0;
+    cout << "==============" << endl;
+
+    cout << "Pre: ";
+    searchTree.printPreOrder();
+    cout << endl;
+
+    cout << "In: ";
+    searchTree.printInOrder();
+    cout << endl;
+
+    cout << "Post: ";
+    searchTree.printPostOrder();
+    cout << endl;
+
+    searchTree.deleteEntity(entities[3].getNum());
+    searchTree.deleteEntity(entities[0].getNum());
+    searchTree.deleteEntity(entities[7].getNum());
+    searchTree.deleteEntity(entities[5].getNum());
+
+    cout << "==============" << endl;
+
+    cout << "Pre: ";
+    searchTree.printPreOrder();
+    cout << endl;
+
+    cout << "In: ";
+    searchTree.printInOrder();
+    cout << endl;
+
+    cout << "Post: ";
+    searchTree.printPostOrder();
+    cout << endl;
+
+    return 0;
 }
