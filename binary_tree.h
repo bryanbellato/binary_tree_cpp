@@ -48,8 +48,8 @@
       15
         \
         20
-  ---------------------------------------------------  
-*/  
+  ---------------------------------------------------
+*/
 struct NodeType {
   Entity entity;
   int factorB;
@@ -57,13 +57,14 @@ struct NodeType {
   NodeType* right;
 };
 class SearchTree {
- public:  
+ public:
   // the constructor.
   // the root node will always be null when initialized. (duuuhhh)
   SearchTree() { root = NULL; }
   // the destructor.
   // when the object is out of the scope, it will clean our memory.
   ~SearchTree() { destroyTree(root); }
+  NodeType* getRoot() const { return root; }
   bool isEmpty() const;
   bool isFull() const;
   // READ, CREATE, DELETE methods for the objects (duh)
